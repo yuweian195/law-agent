@@ -12,6 +12,7 @@
 - FastAPI 接口：法条检索、法律问答、合同审查、上传审查、Markdown 报告。
 - Streamlit 法律意见书风格工作台：法律意见、合同审查、法条索引、案卷记录。
 - SQLite 持久化：咨询记录与审查记录。
-- 23 个单元/接口测试。
+- 24 个单元/接口测试。
 - 离线评估：检索 Recall@3、MRR、规则 Precision/Recall、问答意图/引用/金额准确率。
+- 查询同义扩展：辞退/开除/劝退/被优化/N+1 等口语映射到法条术语，Recall@3 从 93% 提升到 100%。
 - Docker Compose、GitHub Actions CI、架构文档与截图。

@@ -28,11 +28,16 @@ from app.tools.contract_parser import parse_contract  # noqa: E402
 from app.tools.risk_rules import scan_contract  # noqa: E402
 
 
-def evaluate_retrieval(retriever: LawRetriever, questions: list[dict]) -> tuple[float, float]:
+def evaluate_retrieval(
+    retriever: LawRetriever, questions: list[dict], expand: bool = True
+) -> tuple[float, float]:
     hits = 0
     reciprocal_ranks: list[float] = []
     for item in questions:
-        results = [result.article.id for result in retriever.search(item["question"], top_k=3)]
+        results = [
+            result.article.id
+            for result in retriever.search(item["question"], top_k=3, expand=expand)
+        ]
         expected = item["expected_articles"]
         if any(article_id in results for article_id in expected):
             hits += 1
@@ -105,7 +110,8 @@ def main() -> None:
     )
 
     retriever = LawRetriever()
-    recall_at_3, mrr = evaluate_retrieval(retriever, questions)
+    baseline_recall, baseline_mrr = evaluate_retrieval(retriever, questions, expand=False)
+    recall_at_3, mrr = evaluate_retrieval(retriever, questions, expand=True)
     rule_precision, rule_recall, false_positives = evaluate_rules(contract_labels)
     intent_accuracy, citation_recall, amount_accuracy, qa_latency = evaluate_qa(questions)
 
@@ -118,10 +124,10 @@ def main() -> None:
         "",
         "## 法条检索",
         "",
-        "| 指标 | 结果 |",
-        "|---|---:|",
-        f"| Recall@3 | **{recall_at_3:.0%}** |",
-        f"| MRR | **{mrr:.3f}** |",
+        "| 策略 | Recall@3 | MRR |",
+        "|---|---:|---:|",
+        f"| 纯 BM25 | {baseline_recall:.0%} | {baseline_mrr:.3f} |",
+        f"| BM25 + 同义扩展 | **{recall_at_3:.0%}** | **{mrr:.3f}** |",
         "",
         "## 合同风险规则",
         "",
@@ -140,7 +146,7 @@ def main() -> None:
         f"| 金额计算准确率 | **{amount_accuracy:.0%}** |",
         f"| 平均单题耗时 | **{qa_latency:.0f} ms** |",
         "",
-        "> 评估集为合成问题与合成合同，标签按法条与规则人工标注，用于检查检索和规则量级，不构成法律意见。",
+        "> 评估集为 15 个合成问题与 3 份合成合同，标签按法条与规则人工标注，用于检查检索和规则量级，不构成法律意见；指标不代表真实案件泛化能力。",
     ]
     report = "\n".join(lines) + "\n"
     output = ROOT / "reports" / "evaluation.md"

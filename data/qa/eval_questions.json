@@ -3,62 +3,134 @@
     "id": "q1",
     "question": "公司违法解除劳动合同，我工作3年2个月，月薪2万，能拿多少赔偿？",
     "intent": "severance",
-    "expected_articles": ["labor-87", "labor-47"],
+    "expected_articles": [
+      "labor-87",
+      "labor-47"
+    ],
     "expected_amount": 140000
   },
   {
     "id": "q2",
     "question": "工作2年5个月，月薪15000，协商解除，经济补偿多少？",
     "intent": "severance",
-    "expected_articles": ["labor-47", "labor-46"],
+    "expected_articles": [
+      "labor-47",
+      "labor-46"
+    ],
     "expected_amount": 37500
   },
   {
     "id": "q3",
     "question": "试用期6个月合法吗？合同期1年",
     "intent": "probation",
-    "expected_articles": ["labor-19"]
+    "expected_articles": [
+      "labor-19"
+    ]
   },
   {
     "id": "q4",
     "question": "试用期工资只发60%合法吗？",
     "intent": "probation",
-    "expected_articles": ["labor-20"]
+    "expected_articles": [
+      "labor-20"
+    ]
   },
   {
     "id": "q5",
     "question": "竞业限制没有约定补偿金，还有效吗？",
     "intent": "non_compete",
-    "expected_articles": ["labor-23", "labor-24"]
+    "expected_articles": [
+      "labor-23",
+      "labor-24"
+    ]
   },
   {
     "id": "q6",
     "question": "竞业限制最长可以约定几年？",
     "intent": "non_compete",
-    "expected_articles": ["labor-24"]
+    "expected_articles": [
+      "labor-24"
+    ]
   },
   {
     "id": "q7",
     "question": "服务期违约金10万，但公司没有提供培训，合法吗？",
     "intent": "service_period",
-    "expected_articles": ["labor-22"]
+    "expected_articles": [
+      "labor-22"
+    ]
   },
   {
     "id": "q8",
     "question": "合同约定违约金是合同金额的50%，可以调整吗？",
     "intent": "contract_penalty",
-    "expected_articles": ["civil-585"]
+    "expected_articles": [
+      "civil-585"
+    ]
   },
   {
     "id": "q9",
     "question": "公司不给我交社保，我可以解除合同并要补偿吗？",
     "intent": "social_insurance",
-    "expected_articles": ["social-58", "labor-38", "labor-46"]
+    "expected_articles": [
+      "social-58",
+      "labor-38",
+      "labor-46"
+    ]
   },
   {
     "id": "q10",
     "question": "加班费怎么计算？工作日和法定节假日一样吗？",
     "intent": "overtime",
-    "expected_articles": ["labor-law-44", "labor-31"]
+    "expected_articles": [
+      "labor-law-44",
+      "labor-31"
+    ]
+  },
+  {
+    "id": "q11",
+    "question": "被公司辞退了，能拿多少赔偿？",
+    "intent": "severance",
+    "expected_articles": [
+      "labor-87",
+      "labor-47",
+      "labor-48"
+    ]
+  },
+  {
+    "id": "q12",
+    "question": "公司劝退我，我不同意，有补偿吗？",
+    "intent": "severance",
+    "expected_articles": [
+      "labor-36",
+      "labor-46",
+      "labor-47"
+    ]
+  },
+  {
+    "id": "q13",
+    "question": "被优化了，N+1 怎么算？",
+    "intent": "severance",
+    "expected_articles": [
+      "labor-47",
+      "labor-40"
+    ]
+  },
+  {
+    "id": "q14",
+    "question": "试用期工资打八折合法吗？",
+    "intent": "probation",
+    "expected_articles": [
+      "labor-20"
+    ]
+  },
+  {
+    "id": "q15",
+    "question": "竞业协议不给钱还有效吗？",
+    "intent": "non_compete",
+    "expected_articles": [
+      "labor-23",
+      "labor-24"
+    ]
   }
 ]

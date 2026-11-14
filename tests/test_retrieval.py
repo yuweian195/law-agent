@@ -1,6 +1,6 @@
 
 from app.rag.corpus import load_articles
-from app.rag.retriever import LawRetriever
+from app.rag.retriever import LawRetriever, expand_query
 
 
 def test_corpus_loads_all_articles():
@@ -49,3 +49,10 @@ def test_law_filter():
 
     assert results
     assert all("民法典" in item.article.law for item in results)
+
+
+def test_expand_query_maps_colloquial_terms():
+    expanded = expand_query("被公司辞退了，N+1 怎么算")
+    assert "解除劳动合同" in expanded
+    assert "经济补偿" in expanded
+    assert "额外支付一个月工资" in expanded

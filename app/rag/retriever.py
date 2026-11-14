@@ -10,6 +10,32 @@ from app.rag.corpus import load_articles
 from app.rag.tokenizer import tokenize
 from app.schemas import LegalArticle, RetrievedArticle
 
+QUERY_EXPANSIONS: dict[str, list[str]] = {
+    "辞退": ["解除劳动合同", "赔偿金"],
+    "开除": ["解除劳动合同", "赔偿金"],
+    "劝退": ["协商解除", "经济补偿"],
+    "优化": ["经济性裁员", "解除劳动合同"],
+    "被裁": ["经济性裁员", "裁员"],
+    "n+1": ["经济补偿", "额外支付一个月工资"],
+    "n + 1": ["经济补偿", "额外支付一个月工资"],
+    "不交社保": ["未依法缴纳社会保险费", "社会保险"],
+    "社保": ["社会保险"],
+    "竞业协议": ["竞业限制"],
+    "不给钱": ["未支付经济补偿", "按月给予经济补偿"],
+    "赔偿": ["赔偿金", "经济补偿"],
+    "补偿": ["经济补偿", "赔偿金"],
+    "试用期工资": ["试用期", "百分之八十"],
+}
+
+
+def expand_query(query: str) -> str:
+    additions: list[str] = []
+    lowered = query.lower()
+    for term, values in QUERY_EXPANSIONS.items():
+        if term in lowered:
+            additions.extend(values)
+    return query if not additions else query + " " + " ".join(dict.fromkeys(additions))
+
 
 class LawRetriever:
     def __init__(
@@ -43,9 +69,11 @@ class LawRetriever:
         query: str,
         top_k: int | None = None,
         law: str | None = None,
+        expand: bool = True,
     ) -> list[RetrievedArticle]:
         top_k = top_k or get_settings().retrieval_top_k
-        query_tokens = tokenize(query)
+        search_query = expand_query(query) if expand else query
+        query_tokens = tokenize(search_query)
         if not query_tokens:
             return []
 

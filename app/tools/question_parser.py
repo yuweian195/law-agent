@@ -45,6 +45,8 @@ def classify_intent(question: str) -> str:
         return "overtime"
     if "违约金" in text:
         return "contract_penalty"
+    if any(word in text for word in ("n+1", "n + 1", "被优化", "优化了", "劝退")):
+        return "severance"
     if any(word in text for word in ("赔偿", "补偿", "辞退", "解除", "裁员", "开除")):
         return "severance"
     return "general"
