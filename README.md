@@ -6,6 +6,8 @@
 ![LangGraph](https://img.shields.io/badge/Agent-LangGraph-1C3C3C)
 ![FastAPI](https://img.shields.io/badge/API-FastAPI-009688)
 ![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B)
+![TypeScript](https://img.shields.io/badge/Frontend-TypeScript-3178C6)
+![React](https://img.shields.io/badge/React-19-61DAFB)
 
 面向劳动争议与合同审查场景的本地法律助手。输入一个法律问题或一份合同，系统会检索本地法条、给出带引用的意见、扫描条款风险，并在可计算时给出金额测算。
 
@@ -20,6 +22,15 @@
 <p align="center"><a href="docs/screenshots/legal-opinion.png">查看法律意见书原图</a> · <a href="docs/screenshots/contract-review.png">查看合同审查原图</a> · <a href="docs/screenshots/contract-console.png">查看 TypeScript 控制台原图</a></p>
 
 > 仓库内法条为条文节选，合同与问题均为合成样本，用于工程评估；不构成正式法律意见。
+
+## 技术栈
+
+| 层 | 技术 |
+|---|---|
+| Agent / API | Python 3.11、FastAPI、LangGraph |
+| 检索 | BM25 + 中文同义扩展 |
+| 前端 | TypeScript 5、React 19、Vite、Streamlit |
+| 存储 | SQLite（WAL 模式） |
 
 ## 业务背景
 
