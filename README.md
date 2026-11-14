@@ -11,9 +11,11 @@
 
 项目重点不是“让大模型自由发挥”，而是把 **检索、规则、计算、引用** 串成一条可审计的链路：结论必须能落到具体法条，金额必须能展示计算过程。
 
-![法律意见书](docs/screenshots/legal-opinion.png)
+<p align="center"><a href="docs/screenshots/legal-opinion.png"><img src="docs/screenshots/legal-opinion.png" alt="法律意见书" width="900"></a></p>
 
-![合同审查意见书](docs/screenshots/contract-review.png)
+<p align="center"><a href="docs/screenshots/contract-review.png"><img src="docs/screenshots/contract-review.png" alt="合同审查意见书" width="900"></a></p>
+
+<p align="center"><a href="docs/screenshots/legal-opinion.png">查看法律意见书原图</a> · <a href="docs/screenshots/contract-review.png">查看合同审查原图</a></p>
 
 > 仓库内法条为条文节选，合同与问题均为合成样本，用于工程评估；不构成正式法律意见。
 
@@ -43,51 +45,17 @@ LawAgent 的做法：
 
 ## 架构
 
-```mermaid
-flowchart LR
-    U[用户] --> UI[Streamlit 工作台]
-    U --> API[FastAPI]
-    UI --> QA[QAService]
-    UI --> RV[ReviewService]
-    API --> QA
-    API --> RV
-
-    QA --> QG[法律问答 LangGraph]
-    RV --> RG[合同审查 LangGraph]
-
-    QG --> RET[BM25 Retriever]
-    RG --> RET
-    QG --> CALC[赔偿计算器]
-    RG --> RULES[风险规则引擎]
-
-    RET --> CORPUS[(本地法条库)]
-    QG --> DB[(SQLite)]
-    RG --> DB
-    QG -. 可选 .-> LLM[LLM Client]
-    RG -. 可选 .-> LLM
-```
+<p align="center"><a href="docs/diagrams/architecture.svg"><img src="docs/diagrams/architecture.svg" alt="architecture" width="960"></a></p>
 
 ## 工作流
 
 ### 法律问答
 
-```mermaid
-flowchart TD
-    A[analyze_question<br/>意图与事实抽取] --> B[retrieve_laws<br/>BM25 法条检索]
-    B --> C[calculate<br/>经济补偿/赔偿金]
-    C --> D[compose_answer<br/>结论 + 分析 + 引用]
-    D --> E[save_record<br/>SQLite]
-```
+<p align="center"><a href="docs/diagrams/qa-workflow.svg"><img src="docs/diagrams/qa-workflow.svg" alt="qa-workflow" width="960"></a></p>
 
 ### 合同审查
 
-```mermaid
-flowchart TD
-    A[parse_contract<br/>合同与条款拆分] --> B[scan_rules<br/>风险规则扫描]
-    B --> C[verify_context<br/>校验法条依据]
-    C --> D[assess<br/>风险等级与评分]
-    D --> E[save_review<br/>SQLite]
-```
+<p align="center"><a href="docs/diagrams/review-workflow.svg"><img src="docs/diagrams/review-workflow.svg" alt="review-workflow" width="960"></a></p>
 
 每个节点记录耗时与摘要，工作台可以展开“检索与生成轨迹”查看。
 
