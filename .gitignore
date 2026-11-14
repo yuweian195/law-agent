@@ -30,3 +30,8 @@ Thumbs.db
 
 # Streamlit
 .streamlit/secrets.toml
+
+# TypeScript contract review console
+web/node_modules/
+web/dist/
+web/.vite/

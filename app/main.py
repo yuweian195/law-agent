@@ -7,9 +7,10 @@ from typing import Annotated
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
-from app.config import get_settings
+from app.config import BASE_DIR, get_settings
 from app.db import get_repository
 from app.schemas import (
     ContractReview,
@@ -136,3 +137,13 @@ def get_qa_report(record_id: str) -> PlainTextResponse:
         media_type="text/markdown; charset=utf-8",
         headers={"Content-Disposition": f'attachment; filename="qa-{record_id}.md"'},
     )
+
+
+# TypeScript contract review console (built with `npm run build`).
+CONSOLE_DIST = BASE_DIR / "web" / "dist"
+if CONSOLE_DIST.exists():
+    app.mount("/console", StaticFiles(directory=CONSOLE_DIST, html=True), name="console")
+
+    @app.get("/", include_in_schema=False)
+    def console_root() -> RedirectResponse:
+        return RedirectResponse(url="/console/")

@@ -15,4 +15,5 @@
 - 24 个单元/接口测试。
 - 离线评估：检索 Recall@3、MRR、规则 Precision/Recall、问答意图/引用/金额准确率。
 - 查询同义扩展：辞退/开除/劝退/被优化/N+1 等口语映射到法条术语，Recall@3 从 93% 提升到 100%。
+- TypeScript + React 合同审查控制台（Vite 构建，FastAPI `/console` 静态挂载）。
 - Docker Compose、GitHub Actions CI、架构文档与截图。

@@ -15,7 +15,9 @@
 
 <p align="center"><a href="docs/screenshots/contract-review.png"><img src="docs/screenshots/contract-review.png" alt="合同审查意见书" width="900"></a></p>
 
-<p align="center"><a href="docs/screenshots/legal-opinion.png">查看法律意见书原图</a> · <a href="docs/screenshots/contract-review.png">查看合同审查原图</a></p>
+<p align="center"><a href="docs/screenshots/contract-console.png"><img src="docs/screenshots/contract-console.png" alt="TypeScript 合同审查控制台" width="900"></a></p>
+
+<p align="center"><a href="docs/screenshots/legal-opinion.png">查看法律意见书原图</a> · <a href="docs/screenshots/contract-review.png">查看合同审查原图</a> · <a href="docs/screenshots/contract-console.png">查看 TypeScript 控制台原图</a></p>
 
 > 仓库内法条为条文节选，合同与问题均为合成样本，用于工程评估；不构成正式法律意见。
 
@@ -41,7 +43,8 @@ LawAgent 的做法：
 - **合同风险审查**：条款拆分、规则扫描、风险等级、修改建议、法条依据。
 - **风险规则**：试用期超限、试用期工资低于 80%、服务期违约金无培训依据、竞业限制无补偿/超两年、随时解除、不缴社保、加班费包干、单方调岗、最终解释权、违约金过高、自动续约。
 - **引用守卫**：检索不到高相关法条时，不生成确定性结论，提示补充事实或咨询律师。
-- **完整工程化**：FastAPI、Streamlit、SQLite、pytest、Ruff、Docker Compose、GitHub Actions。
+- **TypeScript 合同审查控制台**：React + Vite 案卷索引与审查意见阅读器，逐条展示风险、修改建议和法条依据。
+- **完整工程化**：FastAPI、Streamlit、SQLite、TypeScript、pytest、Ruff、Docker Compose、GitHub Actions。
 
 ## 架构
 
@@ -154,6 +157,18 @@ uvicorn app.main:app --reload
 - Swagger：`http://127.0.0.1:8000/docs`
 - 健康检查：`GET /health`
 
+TypeScript 合同审查控制台：
+
+```bash
+cd web
+npm install
+npm run build
+cd ..
+uvicorn app.main:app --reload
+```
+
+打开 `http://127.0.0.1:8000/console/`。开发模式：`cd web && npm run dev`（默认连接 `http://127.0.0.1:8000`）。
+
 ## 配置 LLM（可选）
 
 复制 `.env.example` 为 `.env`：
@@ -230,7 +245,12 @@ law-agent/
 │   ├── qa/                     # 评估问题
 │   └── fixtures/               # 规则标签
 ├── scripts/evaluate.py
-├── tests/                      # 24 个测试
+├── web/                        # TypeScript + React 合同审查控制台
+│   ├── src/App.tsx
+│   ├── src/api.ts
+│   ├── src/styles.css
+│   └── package.json
+├── tests/                      # 24 个 Python 测试
 ├── reports/evaluation.md
 ├── docs/architecture.md
 ├── Dockerfile
@@ -248,7 +268,7 @@ law-agent/
 
 ## 项目状态
 
-当前版本为完整可运行的单机实现：法条检索、带引用的法律问答、金额测算、合同风险审查与报告导出均已落地，测试与 CI 均已通过，仓库中的功能可直接运行。
+当前版本为完整可运行的实现：Python 服务负责法条检索、带引用的问答、金额测算与合同审查；TypeScript 控制台负责案卷索引与审查意见阅读。两套构建与 CI 均已通过，仓库中的功能可直接运行。
 
 ## 工程边界
 
