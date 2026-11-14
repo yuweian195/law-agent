@@ -175,6 +175,7 @@ cd web
 npm install
 npm run build
 cd ..
+python scripts/seed_demo.py
 uvicorn app.main:app --reload
 ```
 
@@ -255,7 +256,9 @@ law-agent/
 │   ├── contracts/              # 合成合同
 │   ├── qa/                     # 评估问题
 │   └── fixtures/               # 规则标签
-├── scripts/evaluate.py
+├── scripts/
+│   ├── evaluate.py
+│   └── seed_demo.py
 ├── web/                        # TypeScript + React 合同审查控制台
 │   ├── src/App.tsx
 │   ├── src/api.ts
